@@ -3,6 +3,8 @@
  * @since 19/11/2016
  * @version 1.0
  */
+package Projeto;
+
 public class ListaEncadeada implements Iterable<String> {
 
 	private class ListaIterator implements Iterador {
