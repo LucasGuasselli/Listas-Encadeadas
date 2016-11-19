@@ -77,10 +77,12 @@ public class ListaEncadeada implements Iterable<String> {
 	private class Node {
 		public final String dado;
 		private Node next;
+		private Node previous;
 		
 		public Node(String dado) {
 			this.dado = dado;
 			this.next = null;
+			this.previous = null;
 		}//fecha construtor
 		
 		public void setNext(Node next) {

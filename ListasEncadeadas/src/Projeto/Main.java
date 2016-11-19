@@ -10,11 +10,11 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 
-public class TesteListaEncadeada {
+public class Main {
 
 	public static void main(String[] args) {
 		try {
-			(new TesteListaEncadeada()).run();
+			(new Main()).run();
 		} catch (FileNotFoundException e) {
 			System.err.println("Nao encontrou arquivo.");
 			System.err.println(e.getMessage());
@@ -24,12 +24,47 @@ public class TesteListaEncadeada {
 	Parser<Lista> parserList = new ListaParser();
 	
 	private void run() throws FileNotFoundException {
+		Menu menu = new Menu();
 		ListaEncadeada lista = new ListaEncadeada();
 		//importando informacoes dos arquivos csv
 		importarArquivo("src/arquivos/nomes.csv", lista, parserList);
+		
+		Opcao verNomes = new Opcao("Ver Nomes");
+		Opcao remove = new Opcao("Remover nome");
+		
+		Opcao sair = new Opcao("Sair");
+
+		menu.addOption(verNomes);
+		menu.addOption(remove);
+		menu.addOption(sair);
 	
 		
+		Iterador iter = lista.iterator();
 		
+		
+		System.out.println("chegou aqui");
+		
+		try{
+			do {
+				System.out.println("\nMenu: \n");
+				menu.show();
+
+			switch (menu.getOption()) {
+				case 1:
+					lista.print();
+					break;
+				case 2:
+					iter.next();
+					iter.next();
+					iter.remove();
+					break;
+				default:
+					System.exit(0);
+				}//fecha switch
+			} while (true);
+			}catch(Exception e){
+				System.out.println("ERRO!!INSIRA UM NUMERO CONFORME MENU!!");
+			}//fecha try-catch
 		
 	}//fecha run
 		
@@ -41,8 +76,7 @@ public class TesteListaEncadeada {
 		while (reader.hasNext()) {
 			Lista dados = reader.readObject();
 			lista.append(dados.getIndex() + " - " + dados.getNome());
-		}//fecha while
-		lista.print();
+		}//fecha while		
 		reader.close();
 	}//fecha verArquivo
 	
