@@ -31,11 +31,12 @@ public class Main {
 		
 		Opcao verNomes = new Opcao("Ver Nomes");
 		Opcao remove = new Opcao("Remover nome");
-		
+		Opcao add = new Opcao("Adicionar nome");
 		Opcao sair = new Opcao("Sair");
 
 		menu.addOption(verNomes);
 		menu.addOption(remove);
+		menu.addOption(add);
 		menu.addOption(sair);
 	
 		
@@ -48,26 +49,52 @@ public class Main {
 			do {
 				System.out.println("\nMenu: \n");
 				menu.show();
-
+				
 			switch (menu.getOption()) {
 				case 1:
 					lista.print();
 					break;
 				case 2:
-					iter.next();
-					iter.next();
+					usaNext(iter,Integer.parseInt(Digita("Digite um indice da lista")));
+					
 					iter.remove();
+					
+					break;
+				case 3:
+					Lista list = new Lista(Integer.parseInt(Digita("Digite um numero:")),
+							Digita("Digite um nome:"));
+					try{
+						usaNext(iter,Integer.parseInt(Digita("Digite um indice da lista")));
+					}catch(Exception e){
+						System.out.println("ERRO!! Você digitou um numero maior que a quantidade de nos da lista encadeada!!!");
+					}//fecha try-catch
+					iter.insert(list.getIndex() + "-" + list.getNome());
 					break;
 				default:
 					System.exit(0);
 				}//fecha switch
-			} while (true);
+			
+				} while (true);
 			}catch(Exception e){
-				System.out.println("ERRO!!INSIRA UM NUMERO CONFORME MENU!!");
-			}//fecha try-catch
+				System.out.println("ERRO!!");
+		}//fecha try-catch
 		
 	}//fecha run
+	
+	private void usaNext(Iterador iter,int num ){
+		for(int i = 0;i<=num;i++){
+			iter.next();
+		}//fecha for
+		//iter = iter.append(dado);;
+	}//fecha usaNext
+	
+	public String Digita(String texto){
+		Scanner ler = new Scanner(System.in);
 		
+			System.out.println(texto);
+			return ler.next();
+	}//fecha digita
+	
 	private void importarArquivo(String arquivo,ListaEncadeada lista, Parser parser) throws FileNotFoundException {
 		//Parser<Object> parse = new ObjectParser();
 		CSVReader<Lista> reader = new CSVReader<>(arquivo, parser);
@@ -81,26 +108,4 @@ public class Main {
 	}//fecha verArquivo
 	
 	
-	
-	/*public static void main(String[] args) {
-		ListaEncadeada lista = new ListaEncadeada();
-		
-		lista.append("Rafael");
-		lista.append("Antonio");
-		lista.append("Guilherme");
-		lista.append("Ivonei");
-		lista.pushFront("Aline");
-		
-		Iterador iter = lista.iterator();
-		iter.next();
-		iter.next();
-		iter.append("Quarto");
-		iter.insert("Segundo");
-
-		for (String s : lista) {
-			System.out.println(s);
-		}//fecha foreach
-		
-	}//fecha main
-*/
 }//fecha classe
